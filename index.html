@@ -1,530 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mohit Kumar Upadhyaya — Civil Engineer</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  :root{
-    --blue-deep:#08161f;
-    --blue:#0f2c40;
-    --blue-glass:rgba(15,44,64,0.55);
-    --line:#e7f4fa;
-    --line-dim:rgba(231,244,250,0.6);
-    --muted:#75a0b8;
-    --orange:#ff7a45;
-    --orange-soft:rgba(255,122,69,0.14);
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;overflow-x:hidden;cursor:none;
-    background:var(--blue);
-    color:var(--line);
-    font-family:'Inter',sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  @media(max-width:900px){ body{cursor:auto;} }
+    <title>Mohit Kumar Upadhyaya — Civil Engineer & Leader | IOE Purwanchal Campus</title>
+    <meta name="description" content="Mohit Kumar Upadhyaya — Civil Engineering graduate from IOE Purwanchal Campus (74.69% aggregate). Structural analysis with ETABS & AutoCAD, NBC 105:2020 seismic design, CESS-Nepal President, and founder of HAMRO AFNAI Quiz Hub for Loksewa & license preparation." />
+    <meta name="keywords" content="Mohit Kumar Upadhyaya, civil engineer Nepal, IOE Purwanchal Campus, ETABS, AutoCAD, NBC 105:2020, seismic design Nepal, CESS-Nepal, HAMRO AFNAI, Loksewa civil engineering, Nepal Engineering Council license, structural engineer Kathmandu" />
+    <meta name="author" content="Mohit Kumar Upadhyaya" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://mku.name.np/" />
 
-  ::selection{background:var(--orange);color:var(--blue-deep);}
+    <!-- Open Graph -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Mohit Kumar Upadhyaya — Civil Engineer & Leader" />
+    <meta property="og:description" content="Civil Engineering graduate from IOE Purwanchal Campus. Bridging precise structural analysis with data-driven project coordination. Founder of HAMRO AFNAI Quiz Hub." />
+    <meta property="og:url" content="https://mku.name.np/" />
+    <meta property="og:image" content="https://images.pexels.com/photos/8961134/pexels-photo-8961134.jpeg?auto=compress&cs=tinysrgb&w=1200" />
+    <meta property="og:site_name" content="Mohit Kumar Upadhyaya" />
+    <meta property="og:locale" content="en_US" />
 
-  .noise{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:0.035;mix-blend-mode:overlay;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mohit Kumar Upadhyaya — Civil Engineer & Leader" />
+    <meta name="twitter:description" content="Civil Engineering graduate from IOE Purwanchal Campus. ETABS, AutoCAD, NBC 105:2020, CESS-Nepal President, HAMRO AFNAI Quiz Hub." />
+    <meta name="twitter:image" content="https://images.pexels.com/photos/8961134/pexels-photo-8961134.jpeg?auto=compress&cs=tinysrgb&w=1200" />
 
-  #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;width:100%;height:100%;display:block;}
-  .bg-fade{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 25%, transparent 0%, var(--blue) 80%);}
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
-  h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;}
-  .mono{font-family:'IBM Plex Mono',monospace;}
-  a{color:var(--orange);}
-
-  /* progress bar */
-  #progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--orange),#ffb08a);width:0%;z-index:210;}
-
-  /* custom cursor */
-  .cursor{position:fixed;width:26px;height:26px;pointer-events:none;z-index:300;border:1px solid rgba(255,122,69,0.75);border-radius:50%;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s,background .25s;mix-blend-mode:screen;}
-  .cursor-dot{position:fixed;width:4px;height:4px;background:var(--orange);border-radius:50%;pointer-events:none;z-index:300;transform:translate(-50%,-50%);}
-  .cursor.hovering{width:52px;height:52px;background:rgba(255,122,69,0.12);}
-  @media(max-width:900px){.cursor,.cursor-dot{display:none;}}
-
-  /* side rail */
-  .rail{position:fixed;right:26px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:14px;}
-  .rail a{width:8px;height:8px;border-radius:50%;border:1px solid var(--muted);display:block;position:relative;}
-  .rail a::after{content:attr(data-label);position:absolute;right:18px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--line-dim);white-space:nowrap;opacity:0;transition:opacity .2s;}
-  .rail a:hover::after{opacity:1;}
-  .rail a.active{background:var(--orange);border-color:var(--orange);}
-  @media(max-width:900px){.rail{display:none;}}
-
-  /* PRELOADER */
-  #preloader{position:fixed;inset:0;z-index:500;background:var(--blue-deep);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;}
-  #preloader svg{width:120px;height:120px;}
-  #preloader path{fill:none;stroke:var(--orange);stroke-width:1.5;stroke-dasharray:400;stroke-dashoffset:400;}
-  #pl-pct{font-family:'IBM Plex Mono',monospace;font-size:26px;color:var(--line);letter-spacing:0.05em;}
-  #pl-label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:0.15em;color:var(--muted);}
-
-  /* NAV */
-  nav{position:sticky;top:0;z-index:50;background:rgba(8,22,31,0.75);backdrop-filter:blur(10px);border-bottom:1px solid rgba(231,244,250,0.1);}
-  nav .wrap{display:flex;justify-content:space-between;align-items:center;height:60px;}
-  .nav-mark{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;color:var(--muted);}
-  .nav-links{display:flex;gap:24px;list-style:none;padding:0;margin:0;}
-  .nav-links a{position:relative;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--line-dim);text-decoration:none;padding-bottom:3px;}
-  .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--orange);transition:width .25s;}
-  .nav-links a:hover::after{width:100%;}
-  @media(max-width:640px){.nav-links{display:none;}}
-
-  /* HERO */
-  .hero-section{padding:70px 0 30px;min-height:90vh;display:flex;flex-direction:column;justify-content:center;position:relative;}
-  .eyebrow{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.12em;color:var(--orange);text-transform:uppercase;margin-bottom:18px;padding:6px 14px;border:1px solid rgba(255,122,69,0.35);border-radius:20px;background:var(--orange-soft);}
-  h1.hero{font-size:clamp(38px,6.4vw,68px);font-weight:700;line-height:1.05;letter-spacing:-0.015em;max-width:900px;}
-  h1.hero .line{display:block;overflow:hidden;}
-  h1.hero .line span{display:inline-block;}
-  h1.hero .accent{background:linear-gradient(90deg,var(--orange),#ffcfa8,var(--orange));background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4s linear infinite;}
-  @keyframes shine{to{background-position:200% center;}}
-  .hero-sub{font-size:16.5px;color:var(--line-dim);max-width:580px;margin-top:20px;line-height:1.7;}
-
-  .hero-actions{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
-  .btn-magnetic{position:relative;display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:8px;font-size:13.5px;font-weight:600;text-decoration:none;font-family:'IBM Plex Mono',monospace;letter-spacing:0.03em;overflow:hidden;}
-  .btn-primary{background:var(--orange);color:var(--blue-deep);}
-  .btn-outline{border:1px solid rgba(231,244,250,0.3);color:var(--line);}
-
-  .scroll-cue{margin-top:56px;display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.08em;}
-  .scroll-cue .bar{width:1px;height:32px;background:var(--muted);position:relative;overflow:hidden;}
-  .scroll-cue .bar::after{content:'';position:absolute;top:-32px;left:0;width:100%;height:32px;background:var(--orange);animation:scrollDrip 1.8s ease-in-out infinite;}
-  @keyframes scrollDrip{0%{top:-32px;}100%{top:32px;}}
-
-  /* STATS */
-  .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(231,244,250,0.14);border-bottom:1px solid rgba(231,244,250,0.14);}
-  .stat{padding:26px 20px;border-right:1px solid rgba(231,244,250,0.14);position:relative;overflow:hidden;}
-  .stat:last-child{border-right:none;}
-  .stat::before{content:'';position:absolute;inset:0;background:var(--orange-soft);transform:scaleY(0);transform-origin:bottom;transition:transform .4s;}
-  .stat:hover::before{transform:scaleY(1);}
-  .stat .num{font-family:'Space Grotesk',sans-serif;font-size:40px;font-weight:700;color:var(--orange);position:relative;}
-  .stat .lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-top:4px;position:relative;}
-  @media(max-width:640px){.stats-bar{grid-template-columns:repeat(2,1fr);}.stat:nth-child(2){border-right:none;}}
-
-  section{padding:76px 0;position:relative;}
-  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:36px;}
-  .sec-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--orange);}
-  .sec-head h2{font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--line);}
-  .sec-head .rule{flex:1;height:1px;background:rgba(231,244,250,0.15);}
-  .reveal{opacity:0;transform:translateY(30px);}
-
-  .about-grid{display:grid;grid-template-columns:1fr 220px;gap:44px;align-items:start;}
-  .about-grid p{font-size:16px;line-height:1.85;color:var(--line-dim);}
-  .compass{width:180px;height:180px;border:1px solid rgba(231,244,250,0.3);border-radius:50%;position:relative;margin:0 auto;background:radial-gradient(circle,var(--orange-soft),transparent 70%);}
-  .compass .needle{position:absolute;left:50%;top:50%;width:2px;height:75px;background:linear-gradient(to top,var(--orange),transparent);transform-origin:bottom center;transform:translate(-50%,-100%);animation:spin 16s linear infinite;}
-  @keyframes spin{100%{transform:translate(-50%,-100%) rotate(360deg);}}
-  .compass::before,.compass::after{content:'';position:absolute;background:rgba(231,244,250,0.25);}
-  .compass::before{width:1px;height:100%;left:50%;top:0;}
-  .compass::after{height:1px;width:100%;top:50%;left:0;}
-  .compass span{position:absolute;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);}
-  .compass .n{top:8px;left:50%;transform:translateX(-50%);}
-  .compass .s{bottom:8px;left:50%;transform:translateX(-50%);}
-  .compass .e{right:8px;top:50%;transform:translateY(-50%);}
-  .compass .w{left:8px;top:50%;transform:translateY(-50%);}
-  @media(max-width:720px){.about-grid{grid-template-columns:1fr;}.compass{display:none;}}
-
-  .elevation{position:relative;padding-left:28px;}
-  .elevation .spine{position:absolute;left:0;top:4px;bottom:4px;width:1px;background:rgba(231,244,250,0.25);}
-  .elevation .spine-fill{position:absolute;left:0;top:0;width:1px;height:0%;background:var(--orange);box-shadow:0 0 8px var(--orange);}
-  .exp-item{position:relative;padding-bottom:38px;}
-  .exp-item:last-child{padding-bottom:0;}
-  .exp-item::before{content:'';position:absolute;left:-33px;top:4px;width:9px;height:9px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 5px rgba(255,122,69,0.15);}
-  .exp-item .role{font-size:18px;font-weight:600;font-family:'Space Grotesk',sans-serif;}
-  .exp-item .org{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);margin-top:2px;}
-  .exp-item p{font-size:13.5px;color:var(--line-dim);line-height:1.7;margin-top:9px;max-width:640px;}
-
-  .projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-  @media(max-width:720px){.projects-grid{grid-template-columns:1fr;}}
-  .proj-card{background:var(--blue-glass);backdrop-filter:blur(8px);border:1px solid rgba(231,244,250,0.14);border-radius:14px;padding:26px 28px;transition:transform .25s,box-shadow .25s,border-color .25s;will-change:transform;position:relative;overflow:hidden;}
-  .proj-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,122,69,0.14),transparent 60%);opacity:0;transition:opacity .3s;}
-  .proj-card:hover::before{opacity:1;}
-  .proj-card:hover{box-shadow:0 24px 48px rgba(0,0,0,0.4);border-color:rgba(255,122,69,0.3);}
-  .proj-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px;}
-  .proj-card h3{font-size:16px;line-height:1.35;}
-  .tag{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:0.05em;text-transform:uppercase;padding:3px 9px;border:1px solid rgba(255,122,69,0.4);color:var(--orange);border-radius:20px;white-space:nowrap;}
-  .tag.academic{border-color:rgba(117,160,184,0.5);color:var(--muted);}
-  .proj-card p{font-size:13px;color:var(--line-dim);line-height:1.65;margin:0 0 12px;}
-  .proj-meta{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);}
-  .proj-card.placeholder{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;border:1px dashed rgba(231,244,250,0.22);background:transparent;}
-  .proj-card.placeholder .k{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:0.04em;}
-
-  table.rev{width:100%;border-collapse:collapse;font-size:13.5px;}
-  table.rev th{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);text-align:left;padding:9px 12px;border-bottom:1px solid rgba(231,244,250,0.3);}
-  table.rev td{padding:14px 12px;border-bottom:1px solid rgba(231,244,250,0.1);color:var(--line-dim);transition:background .2s;}
-  table.rev tr:hover td{background:rgba(231,244,250,0.03);}
-  table.rev td.rev-no{font-family:'IBM Plex Mono',monospace;color:var(--orange);width:50px;}
-  table.rev td.rev-main{color:var(--line);font-weight:500;}
-
-  .skills-block{margin-bottom:32px;}
-  .skills-block:last-child{margin-bottom:0;}
-  .legend-cat{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:0.08em;color:var(--muted);text-transform:uppercase;margin-bottom:15px;}
-  .gauge-row{display:grid;grid-template-columns:170px 1fr 42px;align-items:center;gap:14px;margin-bottom:14px;}
-  .gauge-row .g-label{font-size:13px;color:var(--line);}
-  .gauge-track{height:6px;background:rgba(231,244,250,0.1);border-radius:3px;overflow:hidden;}
-  .gauge-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--orange),#ffcfa8);border-radius:3px;box-shadow:0 0 10px rgba(255,122,69,0.5);}
-  .gauge-pct{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);text-align:right;}
-  .lang-row{display:flex;gap:10px;flex-wrap:wrap;}
-  .lang-chip{font-family:'IBM Plex Mono',monospace;font-size:11.5px;border:1px solid rgba(231,244,250,0.25);padding:7px 15px;border-radius:20px;color:var(--line-dim);transition:.2s;}
-  .lang-chip:hover{border-color:var(--orange);color:var(--line);}
-
-  footer{padding:64px 0 60px;border-top:1px solid rgba(231,244,250,0.12);}
-  .contact-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;}
-  @media(max-width:720px){.contact-grid{grid-template-columns:1fr;}}
-  .contact-grid h2{font-size:30px;font-family:'Space Grotesk',sans-serif;line-height:1.3;max-width:460px;}
-  .contact-links{margin-top:24px;display:flex;flex-direction:column;gap:12px;}
-  .contact-links a{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--line);text-decoration:none;display:flex;gap:10px;align-items:center;padding:12px 4px;border-bottom:1px solid rgba(231,244,250,0.1);}
-  .contact-links a:hover{color:var(--orange);padding-left:10px;}
-  .contact-links .lbl{color:var(--muted);width:60px;display:inline-block;font-size:11px;text-transform:uppercase;}
-  .btn-print{margin-top:28px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.05em;text-transform:uppercase;background:transparent;border:1px solid var(--orange);color:var(--orange);padding:12px 22px;cursor:pointer;position:relative;overflow:hidden;transition:color .3s;}
-  .btn-print span{position:relative;z-index:1;}
-  .btn-print::before{content:'';position:absolute;inset:0;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform .3s;z-index:0;}
-  .btn-print:hover{color:var(--blue-deep);}
-  .btn-print:hover::before{transform:scaleX(1);}
-  .footer-note{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:48px;padding-top:24px;border-top:1px solid rgba(231,244,250,0.12);}
-
-  @media print{ nav,.btn-print,.cursor,.cursor-dot,#preloader,#bg-canvas,.rail,.noise,#progress-bar{display:none;} body{background:white;color:#111;cursor:auto;} }
-</style>
-</head>
-<body>
-
-<div id="preloader">
-  <svg viewBox="0 0 100 100"><path id="pl-path" d="M20 80 L20 30 L50 15 L80 30 L80 80 Z M35 80 L35 55 L65 55 L65 80"/></svg>
-  <div id="pl-pct">0%</div>
-  <div id="pl-label">LOADING SHEET 01 / 01</div>
-</div>
-
-<div id="progress-bar"></div>
-<canvas id="bg-canvas"></canvas>
-<div class="bg-fade"></div>
-<div class="noise"></div>
-<div class="cursor" id="cursor"></div>
-<div class="cursor-dot" id="cursor-dot"></div>
-
-<div class="rail" id="rail">
-  <a href="#about" data-label="About"></a>
-  <a href="#experience" data-label="Experience"></a>
-  <a href="#projects" data-label="Projects"></a>
-  <a href="#education" data-label="Education"></a>
-  <a href="#skills" data-label="Skills"></a>
-  <a href="#contact" data-label="Contact"></a>
-</div>
-
-<nav>
-  <div class="wrap">
-    <div class="nav-mark">MKU / SHEET 01</div>
-    <div style="display:flex;align-items:center;gap:28px;">
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <a href="/quiz" class="btn-magnetic btn-primary" data-magnetic style="padding:9px 18px;font-size:11px;"><span>Take the Quiz</span></a>
-    </div>
-  </div>
-</nav>
-
-<div class="wrap">
-  <section class="hero-section">
-    <div class="eyebrow">Civil Engineer — Kathmandu, Nepal</div>
-    <h1 class="hero">
-      <span class="line"><span>Structural design,</span></span>
-      <span class="line"><span>site coordination &amp;</span></span>
-      <span class="line"><span class="accent">project delivery</span></span>
-      <span class="line"><span>across Nepal.</span></span>
-    </h1>
-    <p class="hero-sub reveal" id="hero-sub">I'm Mohit Kumar Upadhyaya — a civil engineering graduate working across academic, personal, and client projects, from structural analysis to full project coordination.</p>
-
-    <div class="hero-actions reveal" id="hero-actions">
-      <a href="/quiz" class="btn-magnetic btn-primary" data-magnetic><span>🎯 Take the Quiz</span></a>
-      <a href="#contact" class="btn-magnetic btn-outline" data-magnetic><span>Start a project</span></a>
-      <a href="#projects" class="btn-magnetic btn-outline" data-magnetic><span>See my work</span></a>
-    </div>
-
-    <div class="scroll-cue"><div class="bar"></div>SCROLL</div>
-  </section>
-
-  <div class="stats-bar">
-    <div class="stat"><div class="num" data-count="4">0</div><div class="lbl">Years in Engineering</div></div>
-    <div class="stat"><div class="num" data-count="74.69" data-decimal="2">0</div><div class="lbl">Degree Score %</div></div>
-    <div class="stat"><div class="num" data-count="2">0</div><div class="lbl">Leadership Roles</div></div>
-    <div class="stat"><div class="num" data-count="3">0</div><div class="lbl">Core Tools</div></div>
-  </div>
-
-  <section id="about">
-    <div class="sec-head reveal"><span class="sec-num">01</span><h2>About</h2><span class="rule"></span></div>
-    <div class="about-grid">
-      <p class="reveal">I'm a dedicated Civil Engineering graduate with a passion for leadership and project coordination. I enjoy working with people and finding practical solutions to technical challenges. My background combines engineering with marketing and community leadership, and I'm focused on applying that mix to meaningful infrastructure projects — growing steadily as a professional along the way.</p>
-      <div class="compass reveal"><div class="needle"></div><span class="n">N</span><span class="s">S</span><span class="e">E</span><span class="w">W</span></div>
-    </div>
-  </section>
-
-  <section id="experience">
-    <div class="sec-head reveal"><span class="sec-num">02</span><h2>Experience</h2><span class="rule"></span></div>
-    <div class="elevation">
-      <div class="spine"><div class="spine-fill" id="spine-fill"></div></div>
-      <div class="exp-item reveal"><div class="role">President</div><div class="org mono">CESS-NEPAL, IOE PURWANCHAL CAMPUS</div><p>Led initiatives to help students grow and encouraged different engineering groups to work together — building a strong community and keeping projects on track for successful delivery.</p></div>
-      <div class="exp-item reveal"><div class="role">PR &amp; Marketing Co-ordinator</div><div class="org mono">DELTA 4.0</div><p>Owned event attendance and visibility — coordinating with press outlets and running social media, then analyzing engagement data to sharpen strategy for maximum reach.</p></div>
-    </div>
-  </section>
-
-  <section id="projects">
-    <div class="sec-head reveal"><span class="sec-num">03</span><h2>Projects</h2><span class="rule"></span></div>
-    <div class="projects-grid">
-      <div class="proj-card reveal" onmousemove="tilt(event,this)" onmouseleave="untilt(this)">
-        <div class="proj-top"><h3>Structural Design &amp; Analysis — Extension Building, IOEPC</h3><span class="tag academic">Academic</span></div>
-        <p>Full structural analysis and design of a multi-storey educational facility, engineered for compliance with the Nepal National Building Code (NBC).</p>
-        <div class="proj-meta">FINAL YEAR PROJECT · AUTOCAD / ETABS</div>
-      </div>
-      <div class="proj-card reveal" onmousemove="tilt(event,this)" onmouseleave="untilt(this)">
-        <div class="proj-top"><h3>HAMRO AFNAI — Smart Study Hub</h3><span class="tag">Personal</span></div>
-        <p>Offline-first exam preparation platform for Nepal Engineering (Level 5/7) and PSC/Loksewa candidates, built on Google Apps Script and Sheets.</p>
-        <div class="proj-meta">PRODUCT DESIGN &amp; DEVELOPMENT</div>
-      </div>
-      <div class="proj-card placeholder reveal"><div class="k">+ Client project</div><p style="margin-top:6px;font-size:12.5px;">Send me the details and I'll add it here — scope, client, tools used, and outcome.</p></div>
-      <div class="proj-card placeholder reveal"><div class="k">+ Client project</div><p style="margin-top:6px;font-size:12.5px;">Room reserved for your next site — survey, design, or supervision work.</p></div>
-    </div>
-  </section>
-
-  <section id="education">
-    <div class="sec-head reveal"><span class="sec-num">04</span><h2>Education</h2><span class="rule"></span></div>
-    <table class="rev">
-      <thead><tr><th>Year</th><th>Qualification</th><th>Institution</th></tr></thead>
-      <tbody>
-        <tr class="reveal"><td class="rev-no">2082</td><td class="rev-main">Bachelor in Civil Engineering — 74.69%</td><td>IOE Purwanchal Campus</td></tr>
-        <tr class="reveal"><td class="rev-no">2077</td><td class="rev-main">+2 Science — 3.59 GPA</td><td>National Examination Board</td></tr>
-        <tr class="reveal"><td class="rev-no">2074</td><td class="rev-main">SEE — 3.53 GPA</td><td>National Examination Board</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section id="skills">
-    <div class="sec-head reveal"><span class="sec-num">05</span><h2>Skills</h2><span class="rule"></span></div>
-    <div class="skills-block">
-      <div class="legend-cat">Technical tools</div>
-      <div class="gauge-row reveal"><div class="g-label">AutoCAD</div><div class="gauge-track"><div class="gauge-fill" data-fill="88"></div></div><div class="gauge-pct">88%</div></div>
-      <div class="gauge-row reveal"><div class="g-label">ETABS</div><div class="gauge-track"><div class="gauge-fill" data-fill="80"></div></div><div class="gauge-pct">80%</div></div>
-      <div class="gauge-row reveal"><div class="g-label">Canva</div><div class="gauge-track"><div class="gauge-fill" data-fill="75"></div></div><div class="gauge-pct">75%</div></div>
-    </div>
-    <div class="skills-block">
-      <div class="legend-cat">Professional</div>
-      <div class="gauge-row reveal"><div class="g-label">Leadership</div><div class="gauge-track"><div class="gauge-fill" data-fill="90"></div></div><div class="gauge-pct">90%</div></div>
-      <div class="gauge-row reveal"><div class="g-label">Project Coordination</div><div class="gauge-track"><div class="gauge-fill" data-fill="85"></div></div><div class="gauge-pct">85%</div></div>
-      <div class="gauge-row reveal"><div class="g-label">Negotiation</div><div class="gauge-track"><div class="gauge-fill" data-fill="78"></div></div><div class="gauge-pct">78%</div></div>
-      <div class="gauge-row reveal"><div class="g-label">Digital Marketing</div><div class="gauge-track"><div class="gauge-fill" data-fill="76"></div></div><div class="gauge-pct">76%</div></div>
-    </div>
-    <div class="skills-block">
-      <div class="legend-cat">Languages</div>
-      <div class="lang-row reveal"><span class="lang-chip">English — Fluent</span><span class="lang-chip">Nepali — Native</span><span class="lang-chip">Hindi — Fluent</span></div>
-    </div>
-  </section>
-
-  <footer id="contact">
-    <div class="contact-grid">
-      <div class="reveal">
-        <div class="eyebrow">Get in touch</div>
-        <h2>Have a site, structure, or study to design? Let's talk.</h2>
-        <button class="btn-print" onclick="window.print()" data-magnetic><span>Save this page as PDF</span></button>
-      </div>
-      <div class="contact-links reveal">
-        <a href="tel:9863200285"><span class="lbl">Phone</span> 9863200285</a>
-        <a href="mailto:upadhyaymohit0412@gmail.com"><span class="lbl">Email</span> upadhyaymohit0412@gmail.com</a>
-        <a href="#"><span class="lbl">Based</span> Kalanki, Kathmandu (temp.) · Raskot-8, Kalikot (permanent)</a>
-      </div>
-    </div>
-    <div class="footer-note">MOHIT KUMAR UPADHYAYA · CIVIL ENGINEER · SHEET 01/01 · KATHMANDU, NEPAL</div>
-  </footer>
-</div>
-
-<script>
-gsap.registerPlugin(ScrollTrigger);
-
-/* ---------- preloader with % counter ---------- */
-const plPath = document.getElementById('pl-path');
-const plPct = document.getElementById('pl-pct');
-gsap.to(plPath, {strokeDashoffset:0, duration:1.3, ease:'power2.inOut'});
-let pctObj = {v:0};
-gsap.to(pctObj, {v:100, duration:1.3, ease:'power2.inOut', onUpdate:()=>{ plPct.textContent = Math.floor(pctObj.v)+'%'; }});
-gsap.to('#preloader', {opacity:0, duration:.6, delay:1.4, ease:'power1.out', onComplete:()=>{ document.getElementById('preloader').style.display='none'; playHero(); }});
-
-/* ---------- custom cursor ---------- */
-const cursor = document.getElementById('cursor'), dot = document.getElementById('cursor-dot');
-window.addEventListener('mousemove', e=>{
-  gsap.to(cursor, {x:e.clientX, y:e.clientY, duration:.15, ease:'power1.out'});
-  gsap.to(dot, {x:e.clientX, y:e.clientY, duration:.05});
-});
-document.querySelectorAll('a, button, [data-magnetic]').forEach(el=>{
-  el.addEventListener('mouseenter', ()=>cursor.classList.add('hovering'));
-  el.addEventListener('mouseleave', ()=>cursor.classList.remove('hovering'));
-});
-
-/* ---------- magnetic buttons ---------- */
-document.querySelectorAll('[data-magnetic]').forEach(btn=>{
-  btn.addEventListener('mousemove', e=>{
-    const r = btn.getBoundingClientRect();
-    const x = e.clientX - r.left - r.width/2, y = e.clientY - r.top - r.height/2;
-    gsap.to(btn, {x:x*0.35, y:y*0.35, duration:.3, ease:'power2.out'});
-    const span = btn.querySelector('span');
-    if(span) gsap.to(span, {x:x*0.15, y:y*0.15, duration:.3, ease:'power2.out'});
-  });
-  btn.addEventListener('mouseleave', ()=>{
-    gsap.to(btn, {x:0, y:0, duration:.5, ease:'elastic.out(1,0.4)'});
-    const span = btn.querySelector('span');
-    if(span) gsap.to(span, {x:0, y:0, duration:.5, ease:'elastic.out(1,0.4)'});
-  });
-});
-
-/* ---------- scroll progress bar ---------- */
-gsap.to('#progress-bar', {
-  width:'100%', ease:'none',
-  scrollTrigger:{trigger:document.body, start:'top top', end:'bottom bottom', scrub:0.3}
-});
-
-/* ---------- side rail active state ---------- */
-document.querySelectorAll('section[id]').forEach(sec=>{
-  ScrollTrigger.create({
-    trigger:sec, start:'top 50%', end:'bottom 50%',
-    onToggle:self=>{
-      if(self.isActive){
-        document.querySelectorAll('.rail a').forEach(a=>a.classList.remove('active'));
-        document.querySelectorAll('.nav-links a').forEach(a=>a.style.color='var(--line-dim)');
-        const railLink = document.querySelector('.rail a[href="#'+sec.id+'"]');
-        const navLink = document.querySelector('.nav-links a[href="#'+sec.id+'"]');
-        if(railLink) railLink.classList.add('active');
-        if(navLink) navLink.style.color='var(--orange)';
+    <!-- Structured data: Person -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Mohit Kumar Upadhyaya",
+      "jobTitle": "Civil Engineer & Leader",
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "IOE Purwanchal Campus, Tribhuvan University"
+      },
+      "knowsAbout": [
+        "Structural Engineering",
+        "ETABS",
+        "AutoCAD",
+        "Nepal National Building Code (NBC 105:2020)",
+        "Seismic Design",
+        "Public Relations",
+        "Project Coordination",
+        "Loksewa Exam Preparation"
+      ],
+      "email": "mailto:upadhyaymohit0412@gmail.com",
+      "telephone": "+977-9863200285",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kalanki-9, Kathmandu",
+        "addressCountry": "Nepal"
+      },
+      "url": "https://mku.name.np/",
+      "sameAs": ["https://mku.name.np/quiz"]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Mohit Kumar Upadhyaya — Portfolio",
+      "url": "https://mku.name.np/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://mku.name.np/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
       }
     }
-  });
-});
-
-/* ---------- hero reveal ---------- */
-function playHero(){
-  gsap.set('h1.hero .line span', {yPercent:110});
-  gsap.to('h1.hero .line span', {yPercent:0, duration:.9, stagger:.09, ease:'power3.out'});
-  gsap.to('#hero-sub', {opacity:1, y:0, duration:.8, delay:.35, ease:'power2.out'});
-  gsap.to('#hero-actions', {opacity:1, y:0, duration:.8, delay:.55, ease:'power2.out'});
-  gsap.to('.scroll-cue', {opacity:1, duration:.6, delay:.9});
-
-  document.querySelectorAll('.stat .num').forEach(el=>{
-    const target = parseFloat(el.dataset.count);
-    const decimals = parseInt(el.dataset.decimal || '0');
-    gsap.to(el, {
-      innerText:target, duration:1.6, delay:.6, ease:'power2.out', snap:{innerText:decimals?0.01:1},
-      onUpdate:function(){ el.innerText = decimals ? parseFloat(el.innerText).toFixed(decimals) : Math.floor(el.innerText); }
-    });
-  });
-}
-gsap.set('.hero-sub, .hero-actions', {opacity:0, y:20});
-gsap.set('.scroll-cue', {opacity:0});
-
-/* ---------- generic reveal ---------- */
-document.querySelectorAll('.reveal').forEach(el=>{
-  gsap.fromTo(el, {opacity:0, y:28}, {opacity:1, y:0, duration:.8, ease:'power2.out', scrollTrigger:{trigger:el, start:'top 88%'}});
-});
-
-/* ---------- experience spine fill ---------- */
-gsap.to('#spine-fill', {height:'100%', duration:1, scrollTrigger:{trigger:'.elevation', start:'top 75%', end:'bottom 90%', scrub:1}});
-
-/* ---------- skill gauges ---------- */
-document.querySelectorAll('.gauge-fill').forEach(el=>{
-  gsap.to(el, {width: el.dataset.fill+'%', duration:1.2, ease:'power2.out', scrollTrigger:{trigger:el, start:'top 90%'}});
-});
-
-/* ---------- project tilt ---------- */
-function tilt(e, el){
-  const r = el.getBoundingClientRect();
-  const x = e.clientX - r.left, y = e.clientY - r.top;
-  const rx = ((y / r.height) - 0.5) * -7, ry = ((x / r.width) - 0.5) * 7;
-  el.style.setProperty('--mx', x+'px'); el.style.setProperty('--my', y+'px');
-  gsap.to(el, {rotateX:rx, rotateY:ry, transformPerspective:600, duration:.3, ease:'power1.out'});
-}
-function untilt(el){ gsap.to(el, {rotateX:0, rotateY:0, duration:.4, ease:'power2.out'}); }
-
-/* ---------- WebGL background: structural wireframe + particles, scroll-linked camera ---------- */
-(function(){
-  const canvas = document.getElementById('bg-canvas');
-  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(window.innerWidth, window.innerHeight);
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.1, 100);
-  camera.position.set(0, 1.2, 9);
-
-  const rig = new THREE.Group();
-  scene.add(rig);
-
-  const lineColor = new THREE.Color(0xe7f4fa);
-  const accentColor = new THREE.Color(0xff7a45);
-  const floors = 7, w = 3.2, d = 2.2, floorH = 0.82;
-  for(let i=0;i<floors;i++){
-    const geo = new THREE.BoxGeometry(w, floorH*0.92, d);
-    const edges = new THREE.EdgesGeometry(geo);
-    const mat = new THREE.LineBasicMaterial({color:lineColor, transparent:true, opacity: i===0?0.9:0.2});
-    const wire = new THREE.LineSegments(edges, mat);
-    wire.position.y = i*floorH - (floors*floorH)/2;
-    rig.add(wire);
-  }
-  const colPositions = [[-w/2,-d/2],[w/2,-d/2],[-w/2,d/2],[w/2,d/2]];
-  colPositions.forEach(([x,z])=>{
-    const geo = new THREE.BufferGeometry().setFromPoints([
-      new THREE.Vector3(x, -(floors*floorH)/2, z), new THREE.Vector3(x, (floors*floorH)/2, z)
-    ]);
-    rig.add(new THREE.Line(geo, new THREE.LineBasicMaterial({color:accentColor, transparent:true, opacity:0.35})));
-  });
-  /* diagonal bracing accents for a trussed look */
-  for(let i=0;i<floors-1;i++){
-    const y0 = i*floorH - (floors*floorH)/2, y1 = (i+1)*floorH - (floors*floorH)/2;
-    const geo = new THREE.BufferGeometry().setFromPoints([
-      new THREE.Vector3(-w/2, y0, -d/2), new THREE.Vector3(w/2, y1, -d/2)
-    ]);
-    rig.add(new THREE.Line(geo, new THREE.LineBasicMaterial({color:accentColor, transparent:true, opacity:0.18})));
-  }
-
-  const particleCount = 260;
-  const positions = new Float32Array(particleCount*3);
-  for(let i=0;i<particleCount;i++){
-    positions[i*3] = (Math.random()-0.5)*24;
-    positions[i*3+1] = (Math.random()-0.5)*15;
-    positions[i*3+2] = (Math.random()-0.5)*15 - 4;
-  }
-  const pGeo = new THREE.BufferGeometry();
-  pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({color:0xe7f4fa, size:0.035, transparent:true, opacity:0.5}));
-  scene.add(particles);
-
-  let mouseX=0, mouseY=0;
-  window.addEventListener('mousemove', e=>{ mouseX=(e.clientX/window.innerWidth-0.5); mouseY=(e.clientY/window.innerHeight-0.5); });
-  window.addEventListener('resize', ()=>{ renderer.setSize(window.innerWidth, window.innerHeight); camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); });
-
-  /* tie subtle zoom/rotation to scroll position */
-  let scrollFactor = 0;
-  ScrollTrigger.create({ trigger:document.body, start:'top top', end:'bottom bottom', onUpdate:self=>{ scrollFactor = self.progress; } });
-
-  const clock = new THREE.Clock();
-  function animate(){
-    const t = clock.getElapsedTime();
-    rig.rotation.y = t*0.1 + scrollFactor*Math.PI*0.6;
-    rig.rotation.x = Math.sin(t*0.15)*0.06;
-    particles.rotation.y = -t*0.02;
-    camera.position.x += (mouseX*1.4 - camera.position.x)*0.02;
-    camera.position.y += (1.2 - mouseY*0.8 - scrollFactor*1.5 - camera.position.y)*0.02;
-    camera.position.z += ((9 - scrollFactor*2.5) - camera.position.z)*0.02;
-    camera.lookAt(0,0,0);
-    renderer.render(scene, camera);
-    requestAnimationFrame(animate);
-  }
-  animate();
-})();
-</script>
-</body>
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
