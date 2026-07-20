@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mku.name.np/sitemap.xml

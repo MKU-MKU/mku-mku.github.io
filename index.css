@@ -1,0 +1,286 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --accent: #F5A623;
+  --accent-2: #00C2A8;
+  --accent-3: #8B5CF6;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Keyboard-only focus ring — visible on the dark background, silent for mouse users */
+:focus-visible {
+  outline: 2px solid #F5A623;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.light-mode :focus-visible {
+  outline-color: #a96a0c;
+}
+
+body {
+  background-color: #080B14;
+  color: #EEF2FF;
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Aurora mode (vivid teal/violet wash) */
+.blueprint-mode {
+  background-color: #0a0e1a;
+  color: #e6fff9;
+}
+.blueprint-mode body { background-color: #0a0e1a; }
+
+/* Light mode — warm ivory + ink */
+.light-mode {
+  background-color: #f6f1e7;
+  color: #1a1a1a;
+}
+.light-mode body { background-color: #f6f1e7; }
+
+::selection {
+  background: #F5A623;
+  color: #0F0A00;
+}
+.light-mode ::selection {
+  background: #F5A623;
+  color: #ffffff;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: #080B14; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #F5A623, #d4880f);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover { background: #F5A623; }
+
+.blueprint-mode ::-webkit-scrollbar-track { background: #0a0e1a; }
+.blueprint-mode ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #00C2A8, #007a68); }
+
+.light-mode ::-webkit-scrollbar-track { background: #efe8d8; }
+.light-mode ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #d4880f, #a96a0c); }
+.light-mode ::-webkit-scrollbar-thumb:hover { background: #d4880f; }
+
+/* Utility layers */
+@layer components {
+  .section-pad {
+    @apply px-6 sm:px-10 lg:px-20 xl:px-32;
+  }
+  .section-pad-y {
+    @apply py-24 md:py-32;
+  }
+  .section-label {
+    @apply font-mono text-xs tracking-[0.3em] uppercase text-amber-600;
+  }
+  .blueprint-mode .section-label {
+    @apply text-teal-300;
+  }
+  .light-mode .section-label {
+    @apply text-amber-700;
+  }
+  .glass {
+    background: rgba(18, 24, 41, 0.55);
+    backdrop-filter: blur(14px) saturate(1.4);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .blueprint-mode .glass {
+    background: rgba(13, 18, 33, 0.6);
+    border: 1px solid rgba(0, 194, 168, 0.25);
+  }
+  .light-mode .glass {
+    background: rgba(255, 252, 244, 0.7);
+    border: 1px solid rgba(26, 26, 26, 0.1);
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  }
+  .hairline {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  .blueprint-mode .hairline {
+    border-color: rgba(0, 194, 168, 0.25);
+  }
+  .light-mode .hairline {
+    border-color: rgba(26, 26, 26, 0.12);
+  }
+  .magnetic-btn {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                background 0.4s ease,
+                color 0.4s ease,
+                box-shadow 0.4s ease;
+  }
+  .magnetic-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 0%, rgba(245,166,35,0.4) 50%, transparent 100%);
+    transform: translateX(-120%);
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .magnetic-btn:hover::before { transform: translateX(120%); }
+  .blueprint-mode .magnetic-btn::before {
+    background: linear-gradient(120deg, transparent 0%, rgba(0,194,168,0.45) 50%, transparent 100%);
+  }
+  .light-mode .magnetic-btn::before {
+    background: linear-gradient(120deg, transparent 0%, rgba(245,166,35,0.5) 50%, transparent 100%);
+  }
+  .text-gradient-amber {
+    background: linear-gradient(90deg, #F5A623, #fbe08a, #F5A623);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .text-gradient-teal {
+    background: linear-gradient(90deg, #00C2A8, #33d9c4, #8B5CF6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .ink {
+    @apply text-white;
+  }
+  .light-mode .ink {
+    @apply text-slatey-950;
+  }
+  .ink-soft {
+    @apply text-white/70;
+  }
+  .light-mode .ink-soft {
+    @apply text-slatey-950/75;
+  }
+  .ink-faint {
+    @apply text-white/45;
+  }
+  .light-mode .ink-faint {
+    @apply text-slatey-950/55;
+  }
+}
+
+/* Reveal-on-scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 80ms; }
+.reveal-delay-2 { transition-delay: 160ms; }
+.reveal-delay-3 { transition-delay: 240ms; }
+.reveal-delay-4 { transition-delay: 320ms; }
+.reveal-delay-5 { transition-delay: 400ms; }
+
+/* Grid background */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(245,166,35,0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(245,166,35,0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.blueprint-mode .bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(0,194,168,0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,194,168,0.14) 1px, transparent 1px);
+}
+.light-mode .bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(26,26,26,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(26,26,26,0.06) 1px, transparent 1px);
+}
+
+/* Magnetic button glow */
+.glow-amber {
+  box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.0);
+  transition: box-shadow 0.5s ease;
+}
+.glow-amber:hover {
+  box-shadow: 0 0 36px -4px rgba(245, 166, 35, 0.6);
+}
+.light-mode .glow-amber:hover {
+  box-shadow: 0 0 36px -4px rgba(245, 166, 35, 0.45);
+}
+
+/* Light-mode text color remapping.
+   Tailwind's `text-white` and `text-white/<opacity>` utilities compile to
+   `color: rgb(255 255 255 / <alpha>)`. In light mode we override these to
+   ink tones so legacy `text-white` classes render readable on ivory. */
+.light-mode .text-white {
+  color: #1a1a1a !important;
+}
+.light-mode .text-white\/90 { color: rgba(26, 26, 26, 0.92) !important; }
+.light-mode .text-white\/85 { color: rgba(26, 26, 26, 0.88) !important; }
+.light-mode .text-white\/80 { color: rgba(26, 26, 26, 0.82) !important; }
+.light-mode .text-white\/70 { color: rgba(26, 26, 26, 0.72) !important; }
+.light-mode .text-white\/65 { color: rgba(26, 26, 26, 0.7) !important; }
+.light-mode .text-white\/60 { color: rgba(26, 26, 26, 0.62) !important; }
+.light-mode .text-white\/55 { color: rgba(26, 26, 26, 0.58) !important; }
+.light-mode .text-white\/50 { color: rgba(26, 26, 26, 0.55) !important; }
+.light-mode .text-white\/45 { color: rgba(26, 26, 26, 0.5) !important; }
+.light-mode .text-white\/40 { color: rgba(26, 26, 26, 0.45) !important; }
+.light-mode .text-white\/30 { color: rgba(26, 26, 26, 0.35) !important; }
+
+/* Light-mode surface tweaks for cards that hardcode white-on-dark gradients */
+.light-mode .bg-slatey-950\/85 { background-color: rgba(246, 241, 231, 0.92) !important; }
+.light-mode .bg-slatey-950\/55 { background-color: rgba(246, 241, 231, 0.6) !important; }
+.light-mode .bg-slatey-950\/20 { background-color: rgba(246, 241, 231, 0.25) !important; }
+.light-mode .bg-slatey-950\/40 { background-color: rgba(246, 241, 231, 0.5) !important; }
+.light-mode .bg-slatey-950\/90 { background-color: rgba(246, 241, 231, 0.95) !important; }
+.light-mode .bg-slatey-950\/70 { background-color: rgba(246, 241, 231, 0.78) !important; }
+.light-mode .from-slatey-950\/85 { --tw-gradient-from: rgba(246, 241, 231, 0.92) var(--tw-gradient-from-position) !important; }
+.light-mode .via-slatey-950\/20 { --tw-gradient-via: rgba(246, 241, 231, 0.25) var(--tw-gradient-via-position) !important; }
+.light-mode .to-slatey-950\/40 { --tw-gradient-to: rgba(246, 241, 231, 0.4) var(--tw-gradient-to-position) !important; }
+.light-mode .from-slatey-950\/90 { --tw-gradient-from: rgba(246, 241, 231, 0.95) var(--tw-gradient-from-position) !important; }
+.light-mode .via-slatey-950\/70 { --tw-gradient-via: rgba(246, 241, 231, 0.78) var(--tw-gradient-via-position) !important; }
+.light-mode .to-slatey-950\/40 { --tw-gradient-to: rgba(246, 241, 231, 0.4) var(--tw-gradient-to-position) !important; }
+.light-mode .from-slatey-950 { --tw-gradient-from: #f6f1e7 var(--tw-gradient-from-position) !important; }
+.light-mode .via-slatey-950\/55 { --tw-gradient-via: rgba(246, 241, 231, 0.6) var(--tw-gradient-via-position) !important; }
+.light-mode .border-white\/15 { border-color: rgba(26, 26, 26, 0.15) !important; }
+.light-mode .border-white\/10 { border-color: rgba(26, 26, 26, 0.12) !important; }
+.light-mode .border-white\/8 { border-color: rgba(26, 26, 26, 0.1) !important; }
+.light-mode .bg-white\/5 { background-color: rgba(26, 26, 26, 0.05) !important; }
+.light-mode .bg-white\/\[0\.03\] { background-color: rgba(26, 26, 26, 0.04) !important; }
+.light-mode .bg-white\/\[0\.04\] { background-color: rgba(26, 26, 26, 0.05) !important; }
+.light-mode .bg-white\/10 { background-color: rgba(26, 26, 26, 0.08) !important; }
+.light-mode .bg-white\/15 { background-color: rgba(26, 26, 26, 0.1) !important; }
+.light-mode .divide-white\/8 > * + * { border-color: rgba(26, 26, 26, 0.1) !important; }
+.light-mode .placeholder-white\/30::placeholder { color: rgba(26, 26, 26, 0.4) !important; }
+
+/* Hide scrollbar for horizontal scrollers */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Image hover zoom */
+.img-zoom {
+  overflow: hidden;
+}
+.img-zoom img {
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
+}
+.img-zoom:hover img {
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
